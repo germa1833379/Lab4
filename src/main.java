@@ -1,4 +1,5 @@
-import com.sun.scenario.effect.Glow;
+import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class main extends Application {
@@ -57,17 +59,46 @@ public class main extends Application {
 
         //Etoile
         Group e1 = new Etoile(2).getGr();
-        e1.setTranslateX(200);
+        e1.setTranslateX(1100);
         e1.setTranslateY(200);
+        e1.setScaleX(7);
+        e1.setScaleY(7);
+
+        Group e2 = new Etoile(1).getGr();
+        e2.setTranslateX(1300);
+        e2.setTranslateY(135);
+        e2.setScaleY(3);
+        e2.setScaleX(3);
 
 
+        Group e3 = new Etoile(3).getGr();
+        e3.setTranslateX(1200);
+        e3.setTranslateY(170);
+        e3.setScaleY(5);
+        e3.setScaleX(5);
 
         //Lune
         Circle moon = new Circle(1700,180,100);
         LinearGradient grad=new LinearGradient(0,0,1,1,true,CycleMethod.NO_CYCLE,new Stop(1,Color.BLACK),new Stop(0,Color.GRAY));
         moon.setEffect(new javafx.scene.effect.Glow(0.7));
         moon.setFill(grad);
-        Group root=new Group(house1,rec1,house2,moon,jr,nt,e1);
+
+        //Sun
+        Group sl = new Soleil().getGr();
+        sl.setTranslateY(200);
+        sl.setTranslateX(750);
+        sl.setScaleX(8);
+        sl.setScaleY(8);
+
+
+        RotateTransition rt= new RotateTransition(Duration.millis(3000),sl);
+        rt.setToAngle(360);
+        rt.setCycleCount(Timeline.INDEFINITE);
+        rt.play();
+
+
+
+        Group root=new Group(house1,rec1,house2,moon,jr,nt,e1,e2,e3,sl);
         return root;
     }
 }
